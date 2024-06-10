@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Urgent News</title>
+    <script>
+        async function urgentNews(){
+        let news_container = document.getElementById("news_container"); 
+        fetch('http://localhost:8000/getUrgentNews')
+            .then(response => response.json())
+            .then(data => { 
+                data.forEach(news => {
+                    let news_div = document.createElement('div');
+                    news_div.innerHTML = `<h2>${news.title}</h2><p>${news.content}</p>`;
+                    news_container.appendChild(news_div);
+                });
+            }).catch((error) => {
+                console.log("error: ", error);
+                alert("Something went wrong, please try again.");
+                });
+        }
+    </script>
+</head>
+<body>
+    <div>
+      <h1>Urgent News</h1> 
+      <br>
+      <button onclick="urgentNews()">Get Urgent News</button>
+    </div> 
+    <div id="news_container">
+
+    </div>
+  </body>
+</html>

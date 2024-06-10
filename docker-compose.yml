@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  mysql_container:
+    build: ./db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: newsdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - mysql_data:/var/lib/db
+    ports:
+      - "3307:3307"
+
+  backend_container:
+    build: ./be
+    depends_on:
+      - mysql_container
+    ports:
+      - "8000:8000"
+
+  frontend_container:
+    build: ./fe
+    depends_on:
+      - backend_container
+    ports:
+      - "80:80"
+ 
+volumes:
+  mysql_data:
